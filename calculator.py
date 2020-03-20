@@ -19,16 +19,55 @@ def button_clear():
 
 
 def add():
+    getnum()
+    global operation
+    operation = "+"
+
+
+def subtract():
+    getnum()
+    global operation
+    operation = "-"
+
+
+def multiply():
+    getnum()
+    global operation
+    operation = "*"
+
+
+def divide():
+    getnum()
+    global operation
+    operation = "/"
+
+
+def getnum():
     first_num = e.get()
     global f_num
-    f_num = int(first_num)
+    f_num = float(first_num)
     e.delete(0, END)
+    return
 
 
 def equals():
-    second_num = int(e.get())
-    e.delete(0, END)
-    e.insert(0, f_num + second_num)
+    second_num = float(e.get())
+    if operation == "+":
+        e.delete(0, END)
+        e.insert(0, f_num + second_num)
+    elif operation == "-":
+        e.delete(0, END)
+        e.insert(0, f_num - second_num)
+    elif operation == "*":
+        e.delete(0, END)
+        e.insert(0, f_num * second_num)
+    elif operation == "/" and second_num != 0:
+        e.delete(0, END)
+        e.insert(0, f_num / second_num)
+    elif operation == "/" and second_num == 0:
+        e.delete(0, END)
+        e.insert(0, str("Error, divide by 0"))
+
 
 
 # Defining buttons
@@ -46,6 +85,9 @@ button_0 = Button(root, text="0", padx=40, pady=20, width=3, command=lambda: but
 
 # only need lambda if you are going to pass something into the button command.
 button_add = Button(root, text="+", padx=39, pady=20, width=3, command=add)
+button_subtract = Button(root, text="-", padx=39, pady=20, width=3, command=subtract)
+button_multiply = Button(root, text="X", padx=39, pady=20, width=3, command=multiply)
+button_divide = Button(root, text="÷", padx=39, pady=20, width=3, command=divide)
 button_clear = Button(root, text="Clear", padx=79, pady=20, width=7, command=button_clear)
 button_equal = Button(root, text="=", padx=79, pady=20, width=7, command=equals)
 
@@ -66,6 +108,9 @@ button_9.grid(row=1, column=2)
 button_0.grid(row=4, column=0)
 button_clear.grid(row=4, column=1, columnspan=2)
 button_add.grid(row=5, column=0)
+button_subtract.grid(row=6, column=0)
+button_multiply.grid(row=6, column=1)
+button_divide.grid(row=6, column=2)
 button_equal.grid(row=5, column=1, columnspan=2)
 
 root.mainloop()
