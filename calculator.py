@@ -1,5 +1,8 @@
 from tkinter import *
 
+# FIX: AFTER divide by zero, clear everything, it saves the number you divided by zero and uses it as first num for next input
+# quick solution i aint even try: check if e.get == "error divide bt 0" and if it does, clear it up?? still gotta figure last part of ^^
+
 root = Tk()
 root.title("Simple Calculator")
 
@@ -7,11 +10,23 @@ e = Entry(root, width=35, borderwidth=5)
 e.grid(row=0, column=0, columnspan=3, padx=10, pady=10)
 
 
+def isnum(first_num):
+    try:
+        float(first_num)
+        return True
+    except ValueError:
+        return False
+
+
 def button_click(number):
-    curr = e.get()
-    e.delete(0, END)
-    # make sure these are strings so they don't add.
-    e.insert(0, str(curr) + str(number))
+    if(isnum(e.get())):
+        curr = e.get()
+        e.delete(0, END)
+        # make sure these are strings so they don't add.
+        e.insert(0, str(curr) + str(number))
+    else:
+        e.delete(0, END)
+        e.insert(0, str(number))
 
 
 def button_clear():
@@ -67,7 +82,6 @@ def equals():
     elif operation == "/" and second_num == 0:
         e.delete(0, END)
         e.insert(0, str("Error, divide by 0"))
-
 
 
 # Defining buttons
